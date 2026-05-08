@@ -1,0 +1,100 @@
+[
+  {
+    "id": "gen-01-parabolic-inlet",
+    "task_type": "generation",
+    "prompt": "Write a UDF that applies a parabolic inlet velocity profile in the x-direction for a 2D channel of height 0.01 m with a maximum velocity of 0.1 m/s.",
+    "expected_family": "DEFINE_PROFILE",
+    "notes": "Classic boundary profile example; should use DEFINE_PROFILE with F_CENTROID and F_PROFILE."
+  },
+  {
+    "id": "gen-02-momentum-source",
+    "task_type": "generation",
+    "prompt": "Create a UDF for a linear x-momentum source term with a drag coefficient of 10 1/s. Make sure Fluent can linearize it implicitly.",
+    "expected_family": "DEFINE_SOURCE",
+    "notes": "Should populate dS[eqn] and return the source value."
+  },
+  {
+    "id": "gen-03-temp-viscosity",
+    "task_type": "generation",
+    "prompt": "Write a UDF that defines a dynamic viscosity that depends on temperature using a simple Arrhenius-like form.",
+    "expected_family": "DEFINE_PROPERTY",
+    "notes": "Material property UDF."
+  },
+  {
+    "id": "gen-04-transient-heat-flux",
+    "task_type": "generation",
+    "prompt": "Generate a UDF for a time-varying wall heat flux that oscillates sinusoidally around 500 W/m^2.",
+    "expected_family": "DEFINE_PROFILE",
+    "notes": "Uses CURRENT_TIME; still a DEFINE_PROFILE since it is a boundary-condition profile."
+  },
+  {
+    "id": "gen-05-on-demand-report",
+    "task_type": "generation",
+    "prompt": "Write a UDF I can execute on-demand from the Fluent console that prints the maximum temperature in a named fluid zone.",
+    "expected_family": "DEFINE_ON_DEMAND",
+    "notes": "On-demand macro with Lookup_Thread plus a cell loop."
+  },
+  {
+    "id": "gen-06-adjust",
+    "task_type": "generation",
+    "prompt": "Provide a UDF that runs at the start of every iteration to compute and store a domain-wide average temperature.",
+    "expected_family": "DEFINE_ADJUST",
+    "notes": "Adjust macro executing before each iteration."
+  },
+  {
+    "id": "gen-07-init",
+    "task_type": "generation",
+    "prompt": "Write a UDF that initializes all cells in the domain to U = 0, V = 0, and T = 300 K at solver initialization.",
+    "expected_family": "DEFINE_INIT",
+    "notes": "Initialization macro iterating over cell threads."
+  },
+  {
+    "id": "exp-01-define-source",
+    "task_type": "explanation",
+    "prompt": "Explain when to use DEFINE_SOURCE versus DEFINE_PROFILE in Fluent. Give a concrete example of each.",
+    "expected_family": null,
+    "notes": "Explanation only; no code expected."
+  },
+  {
+    "id": "exp-02-dpm-scalar",
+    "task_type": "explanation",
+    "prompt": "What does DEFINE_DPM_SCALAR_UPDATE do and what arguments does it receive?",
+    "expected_family": null,
+    "notes": "Explanation of a DPM macro."
+  },
+  {
+    "id": "exp-03-compiled-vs-interpreted",
+    "task_type": "explanation",
+    "prompt": "What is the difference between interpreted and compiled UDFs in Fluent and when should I prefer each?",
+    "expected_family": null,
+    "notes": "Conceptual explanation."
+  },
+  {
+    "id": "dbg-01-missing-loop",
+    "task_type": "debug",
+    "prompt": "My DEFINE_PROFILE UDF sets one velocity value but Fluent only applies it to a single face. What am I missing? Provide a corrected minimal UDF.",
+    "expected_family": "DEFINE_PROFILE",
+    "notes": "Needs begin_f_loop/end_f_loop."
+  },
+  {
+    "id": "dbg-02-source-signature",
+    "task_type": "debug",
+    "prompt": "I wrote DEFINE_SOURCE(my_src, cell, thread) { return -10.0 * C_U(cell, thread); } and Fluent complains about the signature. What is wrong and how do I fix it?",
+    "expected_family": "DEFINE_SOURCE",
+    "notes": "Needs dS and eqn arguments."
+  },
+  {
+    "id": "dbg-03-udf-header",
+    "task_type": "debug",
+    "prompt": "The compiler says C_U and C_T are undeclared in my UDF. What header do I need and what else is typically required?",
+    "expected_family": null,
+    "notes": "Missing #include \"udf.h\"."
+  },
+  {
+    "id": "dbg-04-wrong-macro-family",
+    "task_type": "debug",
+    "prompt": "I used DEFINE_PROFILE to try to add a source term to the energy equation in a fluid zone, but it does not affect the solution. Which DEFINE_* macro should I use instead and show a short corrected example.",
+    "expected_family": "DEFINE_SOURCE",
+    "notes": "Should redirect to DEFINE_SOURCE."
+  }
+]
