@@ -119,7 +119,7 @@ Add these in `.env` if you want explicit control:
 
 ```
 EMBED_DEVICE=auto
-EMBED_BATCH_SIZE=64
+EMBED_BATCH_SIZE=128
 ```
 
 - `EMBED_DEVICE=auto` selects `cuda` when available, else `cpu`.
