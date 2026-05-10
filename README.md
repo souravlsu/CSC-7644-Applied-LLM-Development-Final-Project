@@ -43,10 +43,18 @@ cd <your-repo-folder>
 ```
 
 ```powershell
-python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+If PowerShell blocks `Activate.ps1`, you can allow scripts only for the current PowerShell session and then activate:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
 macOS/Linux activation:
